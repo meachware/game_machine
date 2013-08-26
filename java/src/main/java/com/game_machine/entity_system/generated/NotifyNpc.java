@@ -30,37 +30,33 @@ import com.dyuproject.protostuff.Pipe;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.UninitializedMessageException;
 
-public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Schema<CreateNpc>
+public final class NotifyNpc  implements Externalizable, Message<NotifyNpc>, Schema<NotifyNpc>
 {
 
 
 
 
-    public static Schema<CreateNpc> getSchema()
+    public static Schema<NotifyNpc> getSchema()
     {
         return DEFAULT_INSTANCE;
     }
 
-    public static CreateNpc getDefaultInstance()
+    public static NotifyNpc getDefaultInstance()
     {
         return DEFAULT_INSTANCE;
     }
 
-    static final CreateNpc DEFAULT_INSTANCE = new CreateNpc();
+    static final NotifyNpc DEFAULT_INSTANCE = new NotifyNpc();
 
 
 
     public String npcId;
 
 
-
-    public String controller;
-
-
     
 
 
-    public CreateNpc()
+    public NotifyNpc()
     {
         
     }
@@ -76,30 +72,13 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 		return npcId;
 	}
 	
-	public CreateNpc setNpcId(String npcId) {
+	public NotifyNpc setNpcId(String npcId) {
 		this.npcId = npcId;
 		return this;
 	}
 	
 	public Boolean hasNpcId()  {
         return npcId == null ? false : true;
-    }
-
-
-
-    
-
-	public String getController() {
-		return controller;
-	}
-	
-	public CreateNpc setController(String controller) {
-		this.controller = controller;
-		return this;
-	}
-	
-	public Boolean hasController()  {
-        return controller == null ? false : true;
     }
 
 
@@ -119,39 +98,39 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 
     // message method
 
-    public Schema<CreateNpc> cachedSchema()
+    public Schema<NotifyNpc> cachedSchema()
     {
         return DEFAULT_INSTANCE;
     }
 
     // schema methods
 
-    public CreateNpc newMessage()
+    public NotifyNpc newMessage()
     {
-        return new CreateNpc();
+        return new NotifyNpc();
     }
 
-    public Class<CreateNpc> typeClass()
+    public Class<NotifyNpc> typeClass()
     {
-        return CreateNpc.class;
+        return NotifyNpc.class;
     }
 
     public String messageName()
     {
-        return CreateNpc.class.getSimpleName();
+        return NotifyNpc.class.getSimpleName();
     }
 
     public String messageFullName()
     {
-        return CreateNpc.class.getName();
+        return NotifyNpc.class.getName();
     }
 
-    public boolean isInitialized(CreateNpc message)
+    public boolean isInitialized(NotifyNpc message)
     {
         return true;
     }
 
-    public void mergeFrom(Input input, CreateNpc message) throws IOException
+    public void mergeFrom(Input input, NotifyNpc message) throws IOException
     {
         for(int number = input.readFieldNumber(this);; number = input.readFieldNumber(this))
         {
@@ -169,15 +148,6 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
                 	
 
 
-            	case 2:
-
-
-                	message.controller = input.readString();
-                	break;
-
-                	
-
-
             
                 default:
                     input.handleUnknownField(number, this);
@@ -186,7 +156,7 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
     }
 
 
-    public void writeTo(Output output, CreateNpc message) throws IOException
+    public void writeTo(Output output, NotifyNpc message) throws IOException
     {
 
     	
@@ -204,20 +174,6 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 
 
     	
-
-    	if(message.controller == null)
-            throw new UninitializedMessageException(message);
-
-    	
-
-
-    	if(message.controller != null)
-            output.writeString(2, message.controller, false);
-
-    	
-
-
-    	
     }
 
     public String getFieldName(int number)
@@ -226,8 +182,6 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
         {
 
         	case 1: return "npcId";
-
-        	case 2: return "controller";
 
             default: return null;
         }
@@ -245,8 +199,6 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 
     	__fieldMap.put("npcId", 1);
 
-    	__fieldMap.put("controller", 2);
-
     }
    
    public static List<String> getFields() {
@@ -255,7 +207,7 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 	Integer i = 1;
 	
     while(true) { 
-		fieldName = CreateNpc.getSchema().getFieldName(i);
+		fieldName = NotifyNpc.getSchema().getFieldName(i);
 		if (fieldName == null) {
 			break;
 		}
@@ -265,16 +217,16 @@ public final class CreateNpc  implements Externalizable, Message<CreateNpc>, Sch
 	return fieldNames;
 }
 
-public static CreateNpc parseFrom(byte[] bytes) {
-	CreateNpc message = new CreateNpc();
-	ProtobufIOUtil.mergeFrom(bytes, message, RuntimeSchema.getSchema(CreateNpc.class));
+public static NotifyNpc parseFrom(byte[] bytes) {
+	NotifyNpc message = new NotifyNpc();
+	ProtobufIOUtil.mergeFrom(bytes, message, RuntimeSchema.getSchema(NotifyNpc.class));
 	return message;
 }
 
-public CreateNpc clone() {
+public NotifyNpc clone() {
 	byte[] bytes = this.toByteArray();
-	CreateNpc createNpc = CreateNpc.parseFrom(bytes);
-	return createNpc;
+	NotifyNpc notifyNpc = NotifyNpc.parseFrom(bytes);
+	return notifyNpc;
 }
 	
 public byte[] toByteArray() {
@@ -286,7 +238,7 @@ public byte[] toJson() {
 	boolean numeric = false;
 	ByteArrayOutputStream out = new ByteArrayOutputStream();
 	try {
-		JsonIOUtil.writeTo(out, this, CreateNpc.getSchema(), numeric);
+		JsonIOUtil.writeTo(out, this, NotifyNpc.getSchema(), numeric);
 	} catch (IOException e) {
 		e.printStackTrace();
 		throw new RuntimeException("Json encoding failed");
@@ -299,7 +251,7 @@ public byte[] toProtobuf() {
 	byte[] bytes = null;
 
 	try {
-		bytes = ProtobufIOUtil.toByteArray(this, RuntimeSchema.getSchema(CreateNpc.class), buffer);
+		bytes = ProtobufIOUtil.toByteArray(this, RuntimeSchema.getSchema(NotifyNpc.class), buffer);
 		buffer.clear();
 	} catch (Exception e) {
 		e.printStackTrace();

@@ -121,16 +121,21 @@ message Name {
   required string value = 1;
 }
 
-message Npc {
-  required string id = 1;
-  optional Name name = 2;
-  optional Transform transform = 3;
+message IsNpc {
+  required bool isNpc = 1;
+}
+
+message DestroyNpc {
+  required string npcId = 1;
+}
+
+message NotifyNpc {
+  required string npcId = 1;
 }
 
 message CreateNpc {
-  required Npc npc = 1;
-  optional string ai = 2;
-  optional string npcType = 3;
+  required string npcId = 1;
+  required string controller = 2;
 }
 
 message Player {
@@ -240,13 +245,15 @@ message Entity {
   optional GetNeighbors getNeighbors = 21;
   optional TrackEntity trackEntity = 22;
   optional Transform transform = 23;
-  optional Npc npc = 24;
+  optional IsNpc isNpc = 24;
   optional Vector3 vector3 = 25;
   optional CreateNpc createNpc = 26;
   optional EntityList entityList = 27;
   optional GetEntityLocations getEntityLocations = 28;
   optional bool  published = 29;
   optional string entityType = 30;
+  optional NotifyNpc notifyNpc = 31;
+  optional DestroyNpc destroyNpc = 32;
   
 }
 

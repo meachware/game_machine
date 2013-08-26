@@ -142,7 +142,7 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
 
 
-    public Npc npc;
+    public IsNpc isNpc;
 
 
 
@@ -167,6 +167,14 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
 
     public String entityType;
+
+
+
+    public NotifyNpc notifyNpc;
+
+
+
+    public DestroyNpc destroyNpc;
 
 
     
@@ -297,8 +305,20 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
 
 
-		if (this.hasNpc()) {
-			names.add(this.npc.getClass().getSimpleName());
+		if (this.hasIsNpc()) {
+			names.add(this.isNpc.getClass().getSimpleName());
+		}
+
+
+
+		if (this.hasDestroyNpc()) {
+			names.add(this.destroyNpc.getClass().getSimpleName());
+		}
+
+
+
+		if (this.hasNotifyNpc()) {
+			names.add(this.notifyNpc.getClass().getSimpleName());
 		}
 
 
@@ -769,17 +789,17 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
     
 
-	public Npc getNpc() {
-		return npc;
+	public IsNpc getIsNpc() {
+		return isNpc;
 	}
 	
-	public Entity setNpc(Npc npc) {
-		this.npc = npc;
+	public Entity setIsNpc(IsNpc isNpc) {
+		this.isNpc = isNpc;
 		return this;
 	}
 	
-	public Boolean hasNpc()  {
-        return npc == null ? false : true;
+	public Boolean hasIsNpc()  {
+        return isNpc == null ? false : true;
     }
 
 
@@ -882,6 +902,40 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 	
 	public Boolean hasEntityType()  {
         return entityType == null ? false : true;
+    }
+
+
+
+    
+
+	public NotifyNpc getNotifyNpc() {
+		return notifyNpc;
+	}
+	
+	public Entity setNotifyNpc(NotifyNpc notifyNpc) {
+		this.notifyNpc = notifyNpc;
+		return this;
+	}
+	
+	public Boolean hasNotifyNpc()  {
+        return notifyNpc == null ? false : true;
+    }
+
+
+
+    
+
+	public DestroyNpc getDestroyNpc() {
+		return destroyNpc;
+	}
+	
+	public Entity setDestroyNpc(DestroyNpc destroyNpc) {
+		this.destroyNpc = destroyNpc;
+		return this;
+	}
+	
+	public Boolean hasDestroyNpc()  {
+        return destroyNpc == null ? false : true;
     }
 
 
@@ -1152,7 +1206,7 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
             	case 24:
 
 
-                	message.npc = input.mergeObject(message.npc, Npc.getSchema());
+                	message.isNpc = input.mergeObject(message.isNpc, IsNpc.getSchema());
                     break;
 
                 	
@@ -1208,6 +1262,24 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
                 	message.entityType = input.readString();
                 	break;
+
+                	
+
+
+            	case 31:
+
+
+                	message.notifyNpc = input.mergeObject(message.notifyNpc, NotifyNpc.getSchema());
+                    break;
+
+                	
+
+
+            	case 32:
+
+
+                	message.destroyNpc = input.mergeObject(message.destroyNpc, DestroyNpc.getSchema());
+                    break;
 
                 	
 
@@ -1484,8 +1556,8 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
     	
 
 
-    	if(message.npc != null)
-    		output.writeObject(24, message.npc, Npc.getSchema(), false);
+    	if(message.isNpc != null)
+    		output.writeObject(24, message.isNpc, IsNpc.getSchema(), false);
 
     	
 
@@ -1557,6 +1629,28 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
 
     	
+
+    	
+
+
+    	if(message.notifyNpc != null)
+    		output.writeObject(31, message.notifyNpc, NotifyNpc.getSchema(), false);
+
+    	
+
+
+    	
+
+    	
+
+
+    	if(message.destroyNpc != null)
+    		output.writeObject(32, message.destroyNpc, DestroyNpc.getSchema(), false);
+
+    	
+
+
+    	
     }
 
     public String getFieldName(int number)
@@ -1610,7 +1704,7 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
         	case 23: return "transform";
 
-        	case 24: return "npc";
+        	case 24: return "isNpc";
 
         	case 25: return "vector3";
 
@@ -1623,6 +1717,10 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
         	case 29: return "published";
 
         	case 30: return "entityType";
+
+        	case 31: return "notifyNpc";
+
+        	case 32: return "destroyNpc";
 
             default: return null;
         }
@@ -1684,7 +1782,7 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
 
     	__fieldMap.put("transform", 23);
 
-    	__fieldMap.put("npc", 24);
+    	__fieldMap.put("isNpc", 24);
 
     	__fieldMap.put("vector3", 25);
 
@@ -1697,6 +1795,10 @@ public final class Entity  implements Externalizable, Message<Entity>, Schema<En
     	__fieldMap.put("published", 29);
 
     	__fieldMap.put("entityType", 30);
+
+    	__fieldMap.put("notifyNpc", 31);
+
+    	__fieldMap.put("destroyNpc", 32);
 
     }
    
