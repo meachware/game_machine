@@ -6,15 +6,14 @@ module GameMachine
       aspect %w(CreateNpc)
 
       def post_init(*args)
-        @scheduler = get_context.system.scheduler
-        @dispatcher = get_context.system.dispatcher
+        @actor_refs = create_npc_routers
 
-        update_interval = 100
-        @duration = GameMachine::JavaLib::Duration.create(update_interval, java.util.concurrent.TimeUnit::MILLISECONDS)
+        update_interval = args.first || 100
+        schedule_update(update_interval)
+      end
 
-        @actor_refs = GameMachine::Actor::Builder.new(NpcRouter).distributed(200).start
-        @npc_actors = {}
-        schedule_update
+      def create_npc_routers
+        GameMachine::Actor::Builder.new(NpcRouter).distributed(200).start
       end
 
       def on_receive(message)
@@ -23,13 +22,19 @@ module GameMachine
             @actor_refs.each {|actor_ref| actor_ref.tell('update',nil)}
           end
         elsif message.has_create_npc
-          ref = NpcRouter.find_distributed(message.create_npc.npc.id)
+          ref = NpcRouter.find_distributed(message.create_npc.npc_id)
+          ref.tell(message)
+        elsif message.has_destroy_npc
+          ref = NpcRouter.find_distributed(message.destroy_npc.npc_id)
           ref.tell(message)
         end
       end
 
-      def schedule_update
-        @scheduler.schedule(@duration, @duration, get_self, "update", @dispatcher, nil)
+      def schedule_update(update_interval)
+        duration = GameMachine::JavaLib::Duration.create(update_interval, java.util.concurrent.TimeUnit::MILLISECONDS)
+        scheduler = get_context.system.scheduler
+        dispatcher = get_context.system.dispatcher
+        scheduler.schedule(duration, duration, get_self, "update", dispatcher, nil)
       end
 
     end

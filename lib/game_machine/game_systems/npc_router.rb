@@ -1,4 +1,5 @@
 require 'benchmark'
+require 'active_support/inflector'
 module GameMachine
   module GameSystems
     class NpcRouter < Actor::Base
@@ -16,21 +17,28 @@ module GameMachine
           end
         elsif message.is_a?(Entity)
           if message.has_create_npc
-            npc_id = message.create_npc.npc_id
-            @npc_controllers[npc_id] = 1#NpcBehavior.new(message,self)
+            begin
+              npc_id = message.create_npc.npc_id
+              controller_class = message.create_npc.controller.constantize
+              @npc_controllers[npc_id] = controller_class.new(message,self)
+            rescue Exception => e
+              GameMachine.logger.error("CreateNpc error: #{e.class} #{e.message}")
+            end
           elsif message.has_notify_npc
             if npc_controller = @npc_controllers.fetch(message.notify_npc.npc_id,nil)
-              npc_controller.update(message)
+              npc_controller.on_receive(message)
             else
               GameMachine.logger.error("Npc Controller for #{message.notify_npc.npc_id} not found")
             end
+          elsif message.has_destroy_npc
+            if npc_controller = @npc_controllers.fetch(message.destroy_npc.npc_id,nil)
+              npc_controller.destroy(message)
+              @npc_controllers.delete(message.destroy_npc.npc_id)
+            else
+              GameMachine.logger.error("Npc Controller for #{message.destroy_npc.npc_id} not found")
+            end
           end
         end
-      end
-
-      def schedule_update
-        duration = GameMachine::JavaLib::Duration.create(100, java.util.concurrent.TimeUnit::MILLISECONDS)
-        @scheduler.schedule(duration, duration, get_self, "update", @dispatcher, nil)
       end
 
     end
