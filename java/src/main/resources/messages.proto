@@ -122,7 +122,7 @@ message Name {
 }
 
 message IsNpc {
-  required bool isNpc = 1;
+  required bool enabled = 1;
 }
 
 message DestroyNpc {

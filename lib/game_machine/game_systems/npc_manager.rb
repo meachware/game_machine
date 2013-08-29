@@ -4,6 +4,8 @@ module GameMachine
     class NpcManager < GameMachine::Actor::Base
       
       aspect %w(CreateNpc)
+      aspect %w(NotifyNpc)
+      aspect %w(DestroyNpc)
 
       def post_init(*args)
         @actor_refs = create_npc_routers
@@ -21,12 +23,17 @@ module GameMachine
           if message == 'update'
             @actor_refs.each {|actor_ref| actor_ref.tell('update',nil)}
           end
+        elsif message.has_notify_npc
+          ref = NpcRouter.find_distributed(message.notify_npc.npc_id)
+          ref.tell(message)
         elsif message.has_create_npc
           ref = NpcRouter.find_distributed(message.create_npc.npc_id)
           ref.tell(message)
         elsif message.has_destroy_npc
           ref = NpcRouter.find_distributed(message.destroy_npc.npc_id)
           ref.tell(message)
+        else
+          unhandled(message)
         end
       end
 

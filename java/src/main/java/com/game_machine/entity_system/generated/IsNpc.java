@@ -50,7 +50,7 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
 
 
 
-    public Boolean isNpc;
+    public Boolean enabled;
 
 
     
@@ -68,17 +68,17 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
 
     
 
-	public Boolean getIsNpc() {
-		return isNpc;
+	public Boolean getEnabled() {
+		return enabled;
 	}
 	
-	public IsNpc setIsNpc(Boolean isNpc) {
-		this.isNpc = isNpc;
+	public IsNpc setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 		return this;
 	}
 	
-	public Boolean hasIsNpc()  {
-        return isNpc == null ? false : true;
+	public Boolean hasEnabled()  {
+        return enabled == null ? false : true;
     }
 
 
@@ -142,7 +142,7 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
             	case 1:
 
 
-                	message.isNpc = input.readBool();
+                	message.enabled = input.readBool();
                 	break;
 
                 	
@@ -161,14 +161,14 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
 
     	
 
-    	if(message.isNpc == null)
+    	if(message.enabled == null)
             throw new UninitializedMessageException(message);
 
     	
 
 
-    	if(message.isNpc != null)
-            output.writeBool(1, message.isNpc, false);
+    	if(message.enabled != null)
+            output.writeBool(1, message.enabled, false);
 
     	
 
@@ -181,7 +181,7 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
         switch(number)
         {
 
-        	case 1: return "isNpc";
+        	case 1: return "enabled";
 
             default: return null;
         }
@@ -197,7 +197,7 @@ public final class IsNpc  implements Externalizable, Message<IsNpc>, Schema<IsNp
     static
     {
 
-    	__fieldMap.put("isNpc", 1);
+    	__fieldMap.put("enabled", 1);
 
     }
    

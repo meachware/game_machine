@@ -16,19 +16,19 @@ module GameMachine
             end
           end
         elsif message.is_a?(Entity)
-          if message.has_create_npc
+          if message.has_notify_npc
+            if npc_controller = @npc_controllers.fetch(message.notify_npc.npc_id,nil)
+              npc_controller.on_receive(message)
+            else
+              GameMachine.logger.error("Npc Controller for #{message.notify_npc.npc_id} not found")
+            end
+          elsif message.has_create_npc
             begin
               npc_id = message.create_npc.npc_id
               controller_class = message.create_npc.controller.constantize
               @npc_controllers[npc_id] = controller_class.new(message,self)
             rescue Exception => e
               GameMachine.logger.error("CreateNpc error: #{e.class} #{e.message}")
-            end
-          elsif message.has_notify_npc
-            if npc_controller = @npc_controllers.fetch(message.notify_npc.npc_id,nil)
-              npc_controller.on_receive(message)
-            else
-              GameMachine.logger.error("Npc Controller for #{message.notify_npc.npc_id} not found")
             end
           elsif message.has_destroy_npc
             if npc_controller = @npc_controllers.fetch(message.destroy_npc.npc_id,nil)

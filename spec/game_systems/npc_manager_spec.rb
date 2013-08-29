@@ -17,6 +17,12 @@ module GameMachine
         ).set_id('entity')
       end
 
+      let(:notify_npc) do
+        Entity.new.set_notify_npc(
+          NotifyNpc.new.set_npc_id('npc1')
+        ).set_id('entity')
+      end
+
       let(:destroy_npc) do
         Entity.new.set_destroy_npc(
           DestroyNpc.new.set_npc_id('npc1')
@@ -38,6 +44,13 @@ module GameMachine
           it "sends CreateNpc message to npc router" do
             expect(actor_ref).to receive(:tell).with(create_npc)
             subject.on_receive(create_npc)
+          end
+        end
+
+        context "receives a NotifyNpc message" do
+          it "sends NotifyNpc message to npc router" do
+            expect(actor_ref).to receive(:tell).with(notify_npc)
+            subject.on_receive(notify_npc)
           end
         end
 
